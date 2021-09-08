@@ -1,0 +1,21 @@
+﻿@page
+@model CodeYad_Blog.Web.Pages.Auth.LoginModel
+@{
+    Layout = "Shared/_AuthLayout";
+    ViewData["Title"] = "ورود به سایت";
+}
+<form method="post">
+    <h1>@ViewData["Title"]</h1>
+    <div>
+        <input type="text" placeholder="نام کاربری"  asp-for="UserName" />
+        <span asp-validation-for="UserName" style="color: red"></span>
+    </div>
+    <div>
+        <input type="password" placeholder="کلمه عبور" asp-for="Password" />
+        <span asp-validation-for="Password" style="color: red"></span>
+    </div>
+    <div>
+        <input type="submit" value="ورود" />
+        <a asp-page="Register">ثبت نام</a>
+    </div>
+</form>

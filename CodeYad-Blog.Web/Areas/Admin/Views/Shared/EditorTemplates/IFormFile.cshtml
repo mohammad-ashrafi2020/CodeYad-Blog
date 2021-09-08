@@ -1,0 +1,6 @@
+﻿@model Microsoft.AspNetCore.Http.IFormFile
+<div class="form-group">
+    <label asp-for="@Model"></label>
+    <input type="file" asp-for="@Model" class="form-control" />
+    <span asp-validation-for="@Model" class="text-danger"></span>
+</div>

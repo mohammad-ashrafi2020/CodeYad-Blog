@@ -1,0 +1,68 @@
+.tab-post__tabs .tabs__item--active a,
+.tab-post__tabs .tabs__item a:hover,
+.tab-post__tabs .tabs__item a:focus,
+.entry__meta a,
+.style-fashion .entry__meta a:hover,
+.entry__title:hover a,
+.post-list-small__entry-title a:hover,
+.post-list-small__entry-title a:focus,
+.nav__right a:hover,
+.nav__right a:focus,
+.nav__menu > li > a:hover,
+.nav__dropdown-menu > li > a:hover,
+.nav__dropdown-submenu > .nav__dropdown-menu > li > a:hover,
+.post-list-small--arrows li:before,
+.widget_categories li a:before,
+.widget_categories li a:hover,
+.newsticker__item-url:hover,
+.newsticker__item-url:focus,
+.sidenav__menu-url:hover,
+.sidenav__menu-url:focus,
+.sidenav__close-button:hover,
+.header__menu-list a:hover,
+.header__menu-list a:focus,
+.footer a:not(.social):hover,
+.copyright a:hover,
+.style-games .footer .widget-title,
+.style-music .widget-title,
+.entry-date-label__day,
+.entry-date-label__month,
+.video-playlist__list-item--active .video-playlist__list-item-title,
+.video-playlist__list-item:hover .video-playlist__list-item-title,
+.comment-reply:hover,
+.entry-navigation a:hover {
+  color: #3E3EDD;
+}
+
+.btn-color,
+.trending-now__label,
+.newsticker-button:hover,
+.nav--colored .nav__holder,
+.nav__menu > li > a:before,
+.entry__play-time,
+.entry-score,
+.pagination__page--current,
+.pagination__page:not(span):hover,
+.nav-icon-toggle:hover .nav-icon-toggle__inner,
+.nav-icon-toggle:hover .nav-icon-toggle__inner:before,
+.nav-icon-toggle:hover .nav-icon-toggle__inner:after,
+.owl-custom-nav__btn:hover,
+.owl-next:hover,
+.owl-prev:hover,
+#back-to-top:hover,
+.widget_tag_cloud a:hover,
+.entry__tags a:hover,
+.style-videos .nav__dropdown.active,
+.final-review__score-number,
+.final-review__text-holder:before {
+  background-color: #3E3EDD;
+}
+
+.widget_tag_cloud a:hover,
+.entry__tags a:hover {
+  background-color: #3E3EDD !important;
+}
+
+input:focus, textarea:focus {
+  border-color: #3E3EDD;
+}

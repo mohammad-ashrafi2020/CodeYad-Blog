@@ -1,0 +1,51 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>topkalamag | Home</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="">
+
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,600,700%7CSource+Sans+Pro:400,600,700' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/font-icons.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="apple-touch-icon" href="/img/apple-icon.png">
+    <script src="/js/lazysizes.min.js"></script>
+</head>
+<body class="bg-light style-default style-rounded">
+    <div class="loader-mask">
+        <div class="loader">
+            <div></div>
+        </div>
+    </div>
+    <div class="content-overlay"></div>
+    <partial name="Headers/_SideNav" />
+    <main class="main oh" id="main">
+
+        <partial name="Headers/_TopHeader" /> 
+        <partial name="Headers/_MainHeader" />
+        @RenderBody()
+        <partial name="_Footer" />
+        <div id="back-to-top">
+            <a href="#top" aria-label="Go to top"><i class="ui-arrow-up"></i></a>
+        </div>
+    </main> 
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/easing.min.js"></script>
+    <script src="/js/owl-carousel.min.js"></script>
+    <script src="/js/flickity.pkgd.min.js"></script>
+    <script src="/js/twitterFetcher_min.js"></script>
+    <script src="/js/jquery.newsTicker.min.js"></script>
+    <script src="/js/modernizr.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</body>
+
+</html>
