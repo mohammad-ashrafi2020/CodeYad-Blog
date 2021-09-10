@@ -14,5 +14,6 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
         bool IsSlugExist(string slug);
         List<PostDto> GetRelatedPosts(int groupId);
         List<PostDto> GetPopularPost();
+        void IncreaseVisit(int postId);
     }
 }

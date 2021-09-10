@@ -41,6 +41,7 @@ namespace CodeYad_Blog.Web.Pages
 
             Comments = _commentService.GetPostComments(Post.PostId);
             RelatedPosts = _postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
+            _postService.IncreaseVisit(Post.PostId);
             return Page();
         }
 

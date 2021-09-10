@@ -124,6 +124,13 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
                 .Take(6).Select(post => PostMapper.MapToDto(post)).ToList();
         }
 
+        public void IncreaseVisit(int postId)
+        {
+            var post = _context.Posts.First(p => p.Id == postId);
+            post.Visit += 1;
+            _context.SaveChanges();
+        }
+
         public bool IsSlugExist(string slug)
         {
             return _context.Posts.Any(p => p.Slug == slug.ToSlug());

@@ -3,8 +3,12 @@
 @model CodeYad_Blog.Web.Pages.PostModel
 @{
     ViewData["Title"] = Model.Post.Title;
+    var siteUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+    var postUrl = $"{siteUrl}/post/{Model.Post.Slug}";
 }
-
+@section MetaLink{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
 <div class="container">
     <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -69,19 +73,19 @@
 
                     <div class="entry__article-wrap">
                         <div class="entry__share">
-                            <div class="sticky-col">
+                            <div class="sticky-col" style="">
                                 <div class="socials socials--rounded socials--large">
-                                    <a class="social social-facebook" href="#" title="facebook" target="_blank" aria-label="facebook">
+                                    <a class="social social-facebook" href="https://www.facebook.com/sharer/sharer.php?u=@postUrl" title="facebook" target="_blank" aria-label="facebook">
                                         <i class="ui-facebook"></i>
                                     </a>
-                                    <a class="social social-twitter" href="#" title="twitter" target="_blank" aria-label="twitter">
+                                    <a class="social social-twitter" href="https://twitter.com/intent/tweet?url=@postUrl" title="twitter" target="_blank" aria-label="twitter">
                                         <i class="ui-twitter"></i>
                                     </a>
-                                    <a class="social social-google-plus" href="#" title="google" target="_blank" aria-label="google">
-                                        <i class="ui-google"></i>
+                                    <a class="social social-twitter bg-green" href="https://wa.me?text=@postUrl" title="WhatsApp" target="_blank" aria-label="whatsApp">
+                                        <i class="fa fa-whatsapp"></i>
                                     </a>
-                                    <a class="social social-pinterest" href="#" title="pinterest" target="_blank" aria-label="pinterest">
-                                        <i class="ui-pinterest"></i>
+                                    <a class="social social-twitter" href="https://t.me/share/url?url=@postUrl" title="Telegram" target="_blank" aria-label="Telegram">
+                                        <i class="fa fa-send-o"></i>
                                     </a>
                                 </div>
                             </div>

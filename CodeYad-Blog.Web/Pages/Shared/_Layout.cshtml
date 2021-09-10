@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>topkalamag | Home</title>
+    <title>@ViewData["Title"]</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/font-icons.css" />
     <link rel="stylesheet" href="/css/style.css" />
-
+    @await RenderSectionAsync("MetaLink", false)
     <link rel="shortcut icon" href="/img/favicon.png">
     <link rel="apple-touch-icon" href="/img/apple-icon.png">
     <script src="/js/lazysizes.min.js"></script>
