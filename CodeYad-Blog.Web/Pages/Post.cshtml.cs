@@ -32,6 +32,7 @@ namespace CodeYad_Blog.Web.Pages
 
 
         public List<CommentDto> Comments { get; set; }
+        public List<PostDto> RelatedPosts { get; set; }
         public IActionResult OnGet(string slug)
         {
             Post = _postService.GetPostBySlug(slug);
@@ -39,6 +40,7 @@ namespace CodeYad_Blog.Web.Pages
                 return NotFound();
 
             Comments = _commentService.GetPostComments(Post.PostId);
+            RelatedPosts = _postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
             return Page();
         }
 
@@ -50,6 +52,8 @@ namespace CodeYad_Blog.Web.Pages
             if (!ModelState.IsValid)
             {
                 Post = _postService.GetPostBySlug(slug);
+                Comments = _commentService.GetPostComments(Post.PostId);
+                RelatedPosts = _postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
                 return Page();
             }
 

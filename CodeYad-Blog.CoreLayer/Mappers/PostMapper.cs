@@ -31,11 +31,11 @@ namespace CodeYad_Blog.CoreLayer.Mappers
                 UserFullName = post.User?.FullName,
                 Visit = post.Visit,
                 CreationDate = post.CreationDate,
-                Category = CategoryMapper.Map(post.Category),
+                Category = post.Category == null ? null : CategoryMapper.Map(post.Category),
                 ImageName = post.ImageName,
                 PostId = post.Id,
                 SubCategoryId = post.SubCategoryId,
-                SubCategory = post.SubCategoryId == null ? null : CategoryMapper.Map(post.SubCategory)
+                SubCategory = post.SubCategory == null ? null : CategoryMapper.Map(post.SubCategory)
             };
         }
         public static Post EditPost(EditPostDto editDto, Post post)

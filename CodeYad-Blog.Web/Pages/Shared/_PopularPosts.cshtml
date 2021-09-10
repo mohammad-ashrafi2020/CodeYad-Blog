@@ -1,0 +1,39 @@
+﻿@using CodeYad_Blog.CoreLayer.Utilities
+@model List<CodeYad_Blog.CoreLayer.DTOs.Posts.PostDto>
+    <!-- Widget Popular Posts -->
+@if (Model.Any())
+{
+    <aside class="widget widget-popular-posts">
+        <h4 class="widget-title">محبوب ترین مقالات</h4>
+        <ul class="post-list-small">
+            @foreach (var item in Model)
+            {
+                <li class="post-list-small__item">
+                    <article class="post-list-small__entry clearfix">
+                        <div class="post-list-small__img-holder">
+                            <div class="thumb-container thumb-100">
+                                <a asp-page="Post" asp-route-slug="@item.Slug">
+                                    <img data-src="@Directories.GetPostImage(item.ImageName)" src="/img/Thumbs.db" alt="@item.Title" class="post-list-small__img--rounded lazyload">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="post-list-small__body">
+                            <h3 class="post-list-small__entry-title">
+                                <a asp-page="Post" asp-route-slug="@item.Slug">@item.Title</a>
+                            </h3>
+                            <ul class="entry__meta">
+                                <li class="entry__meta-author">
+                                    <span>نویسنده:</span>
+                                    <a href="#">@item.UserFullName</a>
+                                </li>
+                                <li class="entry__meta-date">
+                                    @item.CreationDate.ToShortDateString()
+                                </li>
+                            </ul>
+                        </div>
+                    </article>
+                </li>
+            }
+        </ul>
+    </aside>
+}

@@ -91,79 +91,32 @@
                             @Html.Raw(Model.Post.Description)
                         </div> <!-- end entry article -->
                     </div> <!-- end entry article wrap -->
-                    <div class="entry-author clearfix">
-                        <img alt="" data-src="img/default-avatar.png" src="img/empty.png" class="avatar lazyload">
-                        <div class="entry-author__info">
-                            <h6 class="entry-author__name">
-                                <a href="#">جلال بهرامی راد</a>
-                            </h6>
-                            <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.</p>
-                        </div>
-                    </div>
-                    <section class="section related-posts mt-40 mb-0">
-                        <div class="title-wrap title-wrap--line">
-                            <h3 class="section-title">مطالب مرتبط</h3>
-                        </div>
-                        <div id="owl-posts-3-items" class="owl-carousel owl-theme owl-carousel--arrows-outside">
-                            <article class="entry thumb thumb--size-1">
-                                <div class="entry__img-holder thumb__img-holder" style="background-image: url('img/content/thumb/post-8.jpg');">
-                                    <div class="bottom-gradient"></div>
-                                    <div class="thumb-text-holder">
-                                        <h2 class="thumb-entry-title">
-                                            <a href="single-post.html">گوشی تاشو هواوی میت ایکس در تاریخ مقرر عرضه می‌شود</a>
-                                        </h2>
-                                    </div>
-                                    <a href="single-post.html" class="thumb-url"></a>
-                                </div>
-                            </article>
-                            <article class="entry thumb thumb--size-1">
-                                <div class="entry__img-holder thumb__img-holder" style="background-image: url('img/content/thumb/post-2-2.jpg');">
-                                    <div class="bottom-gradient"></div>
-                                    <div class="thumb-text-holder">
-                                        <h2 class="thumb-entry-title">
-                                            <a href="single-post.html">نمایشگر وان پلاس ۷ قرار است ما را شگفت‌زده کند!</a>
-                                        </h2>
-                                    </div>
-                                    <a href="single-post.html" class="thumb-url"></a>
-                                </div>
-                            </article>
-                            <article class="entry thumb thumb--size-1">
-                                <div class="entry__img-holder thumb__img-holder" style="background-image: url('img/content/thumb/post-9.jpg');">
-                                    <div class="bottom-gradient"></div>
-                                    <div class="thumb-text-holder">
-                                        <h2 class="thumb-entry-title">
-                                            <a href="single-post.html">بهترین کتاب‌های کودک و نوجوان برای تربیت فرزندان موفق</a>
-                                        </h2>
-                                    </div>
-                                    <a href="single-post.html" class="thumb-url"></a>
-                                </div>
-                            </article>
-                            <article class="entry thumb thumb--size-1">
-                                <div class="entry__img-holder thumb__img-holder" style="background-image: url('img/content/thumb/post-7.jpg');">
-                                    <div class="bottom-gradient"></div>
-                                    <div class="thumb-text-holder">
-                                        <h2 class="thumb-entry-title">
-                                            <a href="single-post.html">جعبه‌گشایی هواوی P30 لایت در دیجی‌کالا مگ</a>
-                                        </h2>
-                                    </div>
-                                    <a href="single-post.html" class="thumb-url"></a>
-                                </div>
-                            </article>
-                            <article class="entry thumb thumb--size-1">
-                                <div class="entry__img-holder thumb__img-holder" style="background-image: url('img/content/thumb/post-5.jpg');">
-                                    <div class="bottom-gradient"></div>
-                                    <div class="thumb-text-holder">
-                                        <h2 class="thumb-entry-title">
-                                            <a href="single-post.html">۵ کتاب روانشناسی که برای زندگی بهتر باید بخوانید</a>
-                                        </h2>
-                                    </div>
-                                    <a href="single-post.html" class="thumb-url"></a>
-                                </div>
-                            </article>
-                        </div> <!-- end slider -->
+                  
+                    @if (Model.RelatedPosts.Any())
+                    {
+                        <section class="section related-posts mt-40 mb-0">
+                            <div class="title-wrap title-wrap--line">
+                                <h3 class="section-title">مطالب مرتبط</h3>
+                            </div>
+                            <div id="owl-posts-3-items" class="owl-carousel owl-theme owl-carousel--arrows-outside">
+                                @foreach (var post in Model.RelatedPosts)
+                                {
+                                    <article class="entry thumb thumb--size-1">
+                                        <div class="entry__img-holder thumb__img-holder" style="background-image: url('@Directories.GetPostImage(post.ImageName)');">
+                                            <div class="bottom-gradient"></div>
+                                            <div class="thumb-text-holder">
+                                                <h2 class="thumb-entry-title">
+                                                    <a asp-page="Post" asp-route-slug="@post.Slug">@post.Title</a>
+                                                </h2>
+                                            </div>
+                                            <a asp-page="Post" asp-route-slug="@post.Slug" class="thumb-url"></a>
+                                        </div>
+                                    </article>
+                                }
+                            </div> <!-- end slider -->
 
-                    </section> <!-- end related posts -->
-
+                        </section>
+                    }
                 </article> <!-- end standard post -->
                 <!-- Comments -->
                 <div class="entry-comments">
@@ -192,171 +145,39 @@
                     </ul>
                 </div> <!-- end comments -->
                 <!-- Comment Form -->
-               @if (User.Identity.IsAuthenticated)
-               {
-                   <div id="respond" class="comment-respond">
-                       <div class="title-wrap">
-                           <h5 class="comment-respond__title section-title">دیدگاه شما</h5>
-                       </div>
-                       <form class="comment-form" method="post">
-                           <input type="hidden" asp-for="PostId" value="@Model.Post.PostId"/>
-                           <p class="comment-form-comment">
-                               <label for="comment">دیدگاه</label>
-                               <textarea id="comment" asp-for="Text" rows="5"></textarea>
-                               <span asp-validation-for="Text"></span>
-                           </p>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div id="respond" class="comment-respond">
+                        <div class="title-wrap">
+                            <h5 class="comment-respond__title section-title">دیدگاه شما</h5>
+                        </div>
+                        <form class="comment-form" method="post">
+                            <input type="hidden" asp-for="PostId" value="@Model.Post.PostId" />
+                            <p class="comment-form-comment">
+                                <label for="comment">دیدگاه</label>
+                                <textarea id="comment" asp-for="Text" rows="5"></textarea>
+                                <span asp-validation-for="Text"></span>
+                            </p>
 
-                           <p class="comment-form-submit">
-                               <input type="submit" class="btn btn-lg btn-color btn-button" value="ارسال دیدگاه">
-                           </p>
-                       </form>
-                   </div>
-               }
-               else
-               {
-                   <div class="alert alert-danger">
-                       برای ثبت نظر باید ثبت نام کنید
-                   </div>
-               } <!-- end comment form -->
+                            <p class="comment-form-submit">
+                                <input type="submit" class="btn btn-lg btn-color btn-button" value="ارسال دیدگاه">
+                            </p>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger">
+                        برای ثبت نظر باید ثبت نام کنید
+                    </div>
+                } <!-- end comment form -->
 
             </div> <!-- end content box -->
         </div> <!-- end post content -->
         <!-- Sidebar -->
-        <aside class="col-lg-4 sidebar sidebar--right">
+        <aside class="col-lg-4 sidebar sidebar--right" id="popular_posts">
 
-            <!-- Widget Popular Posts -->
-            <aside class="widget widget-popular-posts">
-                <h4 class="widget-title">محبوب ترین مقالات</h4>
-                <ul class="post-list-small">
-                    <li class="post-list-small__item">
-                        <article class="post-list-small__entry clearfix">
-                            <div class="post-list-small__img-holder">
-                                <div class="thumb-container thumb-100">
-                                    <a href="single-post.html">
-                                        <img data-src="img/content/thumb/post-8.jpg" src="img/empty.png" alt="" class="post-list-small__img--rounded lazyload">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-list-small__body">
-                                <h3 class="post-list-small__entry-title">
-                                    <a href="single-post.html">گوشی تاشو هواوی میت ایکس در تاریخ مقرر عرضه می‌شود</a>
-                                </h3>
-                                <ul class="entry__meta">
-                                    <li class="entry__meta-author">
-                                        <span>نویسنده:</span>
-                                        <a href="#">بهرامی راد</a>
-                                    </li>
-                                    <li class="entry__meta-date">
-                                        ۴ اردیبهشت ۱۳۹۸
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-list-small__item">
-                        <article class="post-list-small__entry clearfix">
-                            <div class="post-list-small__img-holder">
-                                <div class="thumb-container thumb-100">
-                                    <a href="single-post.html">
-                                        <img data-src="img/content/thumb/post-2.jpg" src="img/empty.png" alt="" class="post-list-small__img--rounded lazyload">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-list-small__body">
-                                <h3 class="post-list-small__entry-title">
-                                    <a href="single-post.html">نمایشگر وان پلاس ۷ قرار است ما را شگفت‌زده کند!</a>
-                                </h3>
-                                <ul class="entry__meta">
-                                    <li class="entry__meta-author">
-                                        <span>نویسنده:</span>
-                                        <a href="#">بهرامی راد</a>
-                                    </li>
-                                    <li class="entry__meta-date">
-                                        ۴ اردیبهشت ۱۳۹۸
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-list-small__item">
-                        <article class="post-list-small__entry clearfix">
-                            <div class="post-list-small__img-holder">
-                                <div class="thumb-container thumb-100">
-                                    <a href="single-post.html">
-                                        <img data-src="img/content/thumb/post-6.jpg" src="img/empty.png" alt="" class="post-list-small__img--rounded lazyload">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-list-small__body">
-                                <h3 class="post-list-small__entry-title">
-                                    <a href="single-post.html">چرا لانچرهای اندروید دیگر محبوبیت گذشته را ندارند؟</a>
-                                </h3>
-                                <ul class="entry__meta">
-                                    <li class="entry__meta-author">
-                                        <span>نویسنده:</span>
-                                        <a href="#">بهرامی راد</a>
-                                    </li>
-                                    <li class="entry__meta-date">
-                                        ۴ اردیبهشت ۱۳۹۸
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-list-small__item">
-                        <article class="post-list-small__entry clearfix">
-                            <div class="post-list-small__img-holder">
-                                <div class="thumb-container thumb-100">
-                                    <a href="single-post.html">
-                                        <img data-src="img/content/thumb/post-5.jpg" src="img/empty.png" alt="" class="post-list-small__img--rounded lazyload">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="post-list-small__body">
-                                <h3 class="post-list-small__entry-title">
-                                    <a href="single-post.html">۵ کتاب روانشناسی که برای زندگی بهتر باید بخوانید</a>
-                                </h3>
-                                <ul class="entry__meta">
-                                    <li class="entry__meta-author">
-                                        <span>نویسنده:</span>
-                                        <a href="#">بهرامی راد</a>
-                                    </li>
-                                    <li class="entry__meta-date">
-                                        ۴ اردیبهشت ۱۳۹۸
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
-                    </li>
-                </ul>
-            </aside> <!-- end widget popular posts -->
-            <!-- Widget Newsletter -->
-            <aside class="widget widget_mc4wp_form_widget">
-                <h4 class="widget-title">خبرنامه</h4>
-                <p class="newsletter__text">
-                    <i class="ui-email newsletter__icon"></i>
-                    برای اطلاع از آخرین خبرها مشترک شوید
-                </p>
-                <form class="mc4wp-form" method="post">
-                    <div class="mc4wp-form-fields">
-                        <div class="form-group">
-                            <input type="email" name="EMAIL" placeholder="ایمیل" required="">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-lg btn-color" value="عضویت">
-                        </div>
-                    </div>
-                </form>
-            </aside> <!-- end widget newsletter -->
-            <!-- Widget Ad 300 -->
-            <aside class="widget widget_media_image">
-                <a href="#">
-                    <img src="img/content/mag-1.jpg" alt="">
-                </a>
-            </aside> <!-- end widget ad 300 -->
-
-
-
+    
         </aside> <!-- end sidebar -->
 
     </div> <!-- end content -->

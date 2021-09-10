@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CodeYad_Blog.CoreLayer.DTOs.Posts;
 using CodeYad_Blog.CoreLayer.Mappers;
 using CodeYad_Blog.CoreLayer.Services.FileManager;
@@ -105,6 +106,22 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
                 FilterParams = filterParams,
                 PageCount = pageCount
             };
+        }
+
+        public List<PostDto> GetRelatedPosts(int categoryId)
+        {
+            return _context.Posts
+                .Where(r => r.CategoryId == categoryId || r.SubCategoryId == categoryId)
+                .OrderByDescending(d => d.CreationDate)
+                .Take(6).Select(post => PostMapper.MapToDto(post)).ToList();
+        }
+
+        public List<PostDto> GetPopularPost()
+        {
+            return _context.Posts
+                .Include(c=>c.User)
+                .OrderByDescending(d => d.Visit)
+                .Take(6).Select(post => PostMapper.MapToDto(post)).ToList();
         }
 
         public bool IsSlugExist(string slug)
