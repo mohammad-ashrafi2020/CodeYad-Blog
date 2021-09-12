@@ -91,7 +91,8 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
-                result = result.Where(r => r.Category.Slug == filterParams.CategorySlug);
+                result = result.Where(r => r.Category.Slug == filterParams.CategorySlug
+                                           || r.SubCategory.Slug == filterParams.CategorySlug);
 
             if (!string.IsNullOrWhiteSpace(filterParams.Title))
                 result = result.Where(r => r.Title.Contains(filterParams.Title));
@@ -119,7 +120,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
         public List<PostDto> GetPopularPost()
         {
             return _context.Posts
-                .Include(c=>c.User)
+                .Include(c => c.User)
                 .OrderByDescending(d => d.Visit)
                 .Take(6).Select(post => PostMapper.MapToDto(post)).ToList();
         }

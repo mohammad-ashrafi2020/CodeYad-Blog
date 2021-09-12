@@ -1,0 +1,107 @@
+﻿@page
+@using CodeYad_Blog.CoreLayer.Services.Categories
+@using CodeYad_Blog.CoreLayer.DTOs.Categories
+@using CodeYad_Blog.CoreLayer.Utilities
+@model CodeYad_Blog.Web.Pages.SearchModel
+@inject ICategoryService _categoryService;
+@{
+    CategoryDto category = null;
+    var search = "";
+    if (!string.IsNullOrWhiteSpace(Model.Filter.FilterParams.CategorySlug))
+    {
+        category = _categoryService.GetCategoryBy(Model.Filter.FilterParams.CategorySlug);
+        if (category != null)
+        {
+            search = category.Title;
+        }
+    }
+    else
+    {
+        search = Model.Filter.FilterParams.Title ?? "مقالات سایت";
+    }
+    ViewData["Title"] = search;
+}
+<div class="main-container container pt-40" id="main-container">
+    <div class="row">
+        <div class="col-lg-8 blog__content mb-72">
+            @if (search != null)
+            {
+                <h1 class="page-title">نتایج جستجو برای: @search</h1>
+            }
+            @foreach (var item in Model.Filter.Posts)
+            {
+                <article class="entry card post-list">
+                    <div class="entry__img-holder post-list__img-holder card__img-holder" style="background-image: url(@Directories.GetPostImage(item.ImageName))">
+                        <a asp-page="Post" asp-route-slug="@item.Slug" class="thumb-url"></a>
+
+
+                        <img src="@Directories.GetPostImage(item.ImageName)" alt="@item.Title" class="entry__img d-none">
+
+                        @if (item.SubCategory != null)
+                        {
+                            <a asp-page="Search" asp-route-categorySlug="@item.SubCategory.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--blue">
+                                @item.SubCategory.Title
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a asp-page="Search" asp-route-categorySlug="@item.Category.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--blue">
+                                @item.Category.Title
+                            </a>
+                        }
+
+                    </div>
+
+                    <div class="entry__body post-list__body card__body">
+                        <div class="entry__header">
+                            <h2 class="entry__title">
+                                <a asp-page="Post" asp-route-slug="@item.Slug">
+                                    @item.Title
+                                </a>
+                            </h2>
+                            <ul class="entry__meta">
+                                <li class="entry__meta-author">
+                                    <span>نویسنده:</span>
+                                    <a href="#">@item.UserFullName</a>
+                                </li>
+                                <li class="entry__meta-date">
+                                    @item.CreationDate.ToShortDateString()
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>عد از اعلام تصمیم سامسونگ برای به عقب انداختن عرضه گلکسی فولد، شایعاتی مبنی بر احتمال تاخیر در عرضه ...</p>
+                        </div>
+                    </div>
+                </article>
+            }
+
+
+            @if (Model.Filter.PageCount > 1)
+            {
+                <nav class="pagination">
+                    @for (var i = 1; i <= Model.Filter.PageCount; i++)
+                    {
+                        if (i == Model.Filter.FilterParams.PageId)
+                        {
+                            <span class="pagination__page pagination__page--current">@i</span>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="changePage(@i)" class="pagination__page">@i</a>
+                        }
+                    }
+                    @if (Model.Filter.PageCount > Model.Filter.FilterParams.PageId)
+                    {
+                        <a href="#" onclick="changePage(@(@Model.Filter.FilterParams.PageId + 1))" class="pagination__page pagination__icon pagination__page--next">
+                            <i class="ui-arrow-left"></i>
+                        </a>
+                    }
+                </nav>
+            }
+        </div>
+        <aside class="col-lg-4 sidebar sidebar--right" id="popular_posts">
+        </aside>
+    </div> <!-- end content -->
+</div>
