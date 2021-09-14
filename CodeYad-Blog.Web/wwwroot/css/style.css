@@ -63,7 +63,20 @@
 /*-------------------------------------------------------*/
 .clearfix {
 	*zoom: 1; }
-
+.loading {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #00000094;
+    z-index: 10000;
+    /* align-items: center; */
+    text-align: center;
+}
+.loading img {
+    position: relative;
+    top: 40%;
+}
 .clearfix:before, .clearfix:after {
 	display: table;
 	line-height: 0;

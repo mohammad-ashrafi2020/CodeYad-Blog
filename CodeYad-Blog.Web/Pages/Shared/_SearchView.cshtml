@@ -1,0 +1,75 @@
+﻿@using CodeYad_Blog.CoreLayer.Utilities
+@model CodeYad_Blog.CoreLayer.DTOs.Posts.PostFilterDto
+   
+    @foreach (var item in Model.Posts)
+    {
+        <article class="entry card post-list">
+            <div class="entry__img-holder post-list__img-holder card__img-holder" style="background-image: url(@Directories.GetPostImage(item.ImageName))">
+                <a asp-page="Post" asp-route-slug="@item.Slug" class="thumb-url"></a>
+
+
+                <img src="@Directories.GetPostImage(item.ImageName)" alt="@item.Title" class="entry__img d-none">
+
+                @if (item.SubCategory != null)
+                {
+                    <a asp-page="Search" asp-route-categorySlug="@item.SubCategory.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--blue">
+                        @item.SubCategory.Title
+                    </a>
+
+                }
+                else
+                {
+                    <a asp-page="Search" asp-route-categorySlug="@item.Category.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--blue">
+                        @item.Category.Title
+                    </a>
+                }
+
+            </div>
+
+            <div class="entry__body post-list__body card__body">
+                <div class="entry__header">
+                    <h2 class="entry__title">
+                        <a asp-page="Post" asp-route-slug="@item.Slug">
+                            @item.Title
+                        </a>
+                    </h2>
+                    <ul class="entry__meta">
+                        <li class="entry__meta-author">
+                            <span>نویسنده:</span>
+                            <a href="#">@item.UserFullName</a>
+                        </li>
+                        <li class="entry__meta-date">
+                            @item.CreationDate.ToShortDateString()
+                        </li>
+                    </ul>
+                </div>
+                <div class="entry__excerpt">
+                    <p>عد از اعلام تصمیم سامسونگ برای به عقب انداختن عرضه گلکسی فولد، شایعاتی مبنی بر احتمال تاخیر در عرضه ...</p>
+                </div>
+            </div>
+        </article>
+    }
+
+
+    @if (Model.PageCount > 1)
+    {
+        <nav class="pagination">
+            @for (var i = 1; i <= Model.PageCount; i++)
+            {
+                if (i == Model.FilterParams.PageId)
+                {
+                    <span class="pagination__page pagination__page--current">@i</span>
+                }
+                else
+                {
+                    <a href="#" onclick="ajaxPagination(@i)" class="pagination__page">@i</a>
+                }
+            }
+            @if (Model.PageCount > Model.FilterParams.PageId)
+            {
+                <a href="#" onclick="ajaxPagination(@(@Model.FilterParams.PageId + 1))" class="pagination__page pagination__icon pagination__page--next">
+                    <i class="ui-arrow-left"></i>
+                </a>
+            }
+        </nav>
+    }

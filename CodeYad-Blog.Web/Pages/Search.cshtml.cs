@@ -24,9 +24,21 @@ namespace CodeYad_Blog.Web.Pages
             {
                 CategorySlug = categorySlug,
                 PageId = pageId,
-                Take = 6,
+                Take = 1,
                 Title = q
             });
+        }
+
+        public IActionResult OnGetPagination(int pageId = 1, string categorySlug = null, string q = null)
+        {
+            var model = _postService.GetPostsByFilter(new PostFilterParams()
+            {
+                CategorySlug = categorySlug,
+                PageId = pageId,
+                Take = 1,
+                Title = q
+            });
+            return Partial("_SearchView", model);
         }
     }
 }
