@@ -1,4 +1,5 @@
-﻿<header class="sidenav" id="sidenav">
+﻿@model List<CodeYad_Blog.CoreLayer.DTOs.Categories.CategoryDto>
+<header class="sidenav" id="sidenav">
 
     <!-- close -->
     <div class="sidenav__close">
@@ -11,31 +12,35 @@
     <nav class="sidenav__menu-container">
         <ul class="sidenav__menu" role="menubar">
             <li>
-                <a href="#" class="sidenav__menu-url">صفحه اصلی</a>
+                <a class="sidenav__menu-url" href="/">صفحه اصلی</a>
             </li>
-            <li>
-                <a href="#" class="sidenav__menu-url">صفحات</a>
-                <button class="sidenav__menu-toggle" aria-haspopup="true" aria-label="Open dropdown"><i class="ui-arrow-down"></i></button>
-                <ul class="sidenav__menu-dropdown">
-                    <li><a href="about.html" class="sidenav__menu-url">درباره ما</a></li>
-                    <li><a href="contact.html" class="sidenav__menu-url">تماس با ما</a></li>
-                    <li><a href="search-results.html" class="sidenav__menu-url">نتایج جستجو</a></li>
-                    <li><a href="categories.html" class="sidenav__menu-url">دسته بندی مطالب</a></li>
-                    <li><a href="single-post.html" class="sidenav__menu-url">نمایش مطلب</a></li>
-                    <li><a href="404.html" class="sidenav__menu-url">404</a></li>
-                </ul>
-            </li>
+            @foreach (var category in Model.Where(p => p.ParentId == null))
+            {
+                var hasChild = Model.Any(p => p.ParentId == category.Id);
+                if (hasChild)
+                {
+                    <li>
+                        <a class="sidenav__menu-url" href="/search?categorySlug=@category.Slug">@category.Title</a>
+                        <button class="sidenav__menu-toggle" aria-haspopup="true" aria-label="Open dropdown"><i class="ui-arrow-down"></i></button>
 
-            <!-- Categories -->
-            <li>
-                <a href="#" class="sidenav__menu-url">تکنولوژی</a>
-            </li>
-            <li>
-                <a href="#" class="sidenav__menu-url">زیبایی و سلامت</a>
-            </li>
-            <li>
-                <a href="#" class="sidenav__menu-url">موبایل</a>
-            </li>
+                        <ul class="sidenav__menu-dropdown">
+                            @foreach (var child in Model.Where(p => p.ParentId == category.Id))
+                            {
+                                <li>
+                                    <a class="sidenav__menu-url" href="/search?categorySlug=@child.Slug">@child.Title</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class="sidenav__menu-url" href="/search?categorySlug=@category.Slug">@category.Title</a>
+                    </li>
+                }
+            }
+          
         </ul>
     </nav>
 

@@ -1,4 +1,8 @@
-﻿
+﻿@using CodeYad_Blog.CoreLayer.Services.Categories
+@inject ICategoryService _categoryService;
+@{
+    var categories = _categoryService.GetAllCategory();
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,11 +33,11 @@
         </div>
     </div>
     <div class="content-overlay"></div>
-    <partial name="Headers/_SideNav" />
+    <partial name="Headers/_SideNav" model="categories"/>
     <main class="main oh" id="main">
 
         <partial name="Headers/_TopHeader" />
-        <partial name="Headers/_MainHeader" />
+        <partial name="Headers/_MainHeader" model="categories"/>
         @RenderBody()
         <partial name="_Footer" />
         <div id="back-to-top">
