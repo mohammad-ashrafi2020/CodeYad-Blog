@@ -43,6 +43,7 @@
                         <th>عنوان</th>
                         <th>slug</th>
                         <th>گروه</th>
+                        <th>پست ویژه</th>
                         <th>عملیات</th>
                     </tr>
                 </thead>
@@ -58,6 +59,17 @@
                             <td>@item.Slug</td>
                             <td>
                                 @item.Category.Title
+                            </td>
+                            <td>
+                                @if (item.IsSpecial)
+                                {
+                                    <i class="fa fa-check text-success"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-close text-danger"></i>
+
+                                }
                             </td>
                             <td>
                                 <a asp-area="admin" asp-controller="Post" asp-action="Edit" asp-route-id="@item.PostId" class="btn btn-info btn-sm">ویرایش</a>

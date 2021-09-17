@@ -24,7 +24,7 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
             {
                 CategorySlug = categorySlug,
                 PageId = pageId,
-                Take = 1,
+                Take = 10,
                 Title = title
             };
             var model = _postService.GetPostsByFilter(param);
@@ -52,6 +52,7 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
                 Slug = createViewModel.Slug,
                 SubCategoryId = createViewModel.SubCategoryId == 0 ? null : createViewModel.SubCategoryId,
                 Title = createViewModel.Title,
+                IsSpecial = createViewModel.IsSpecial,
                 UserId = User.GetUserId()
             });
 
@@ -74,7 +75,8 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
                 Description = post.Description,
                 Slug = post.Slug,
                 SubCategoryId = post.SubCategoryId,
-                Title = post.Title
+                Title = post.Title,
+                IsSpecial = post.IsSpecial,
             };
             return View(model);
         }
@@ -96,7 +98,8 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
                 Slug = editViewModel.Slug,
                 SubCategoryId = editViewModel.SubCategoryId == 0 ? null : editViewModel.SubCategoryId,
                 Title = editViewModel.Title,
-                PostId = id
+                PostId = id,
+                IsSpecial = editViewModel.IsSpecial
             });
             if (result.Status != OperationResultStatus.Success)
             {

@@ -30,6 +30,9 @@ namespace CodeYad_Blog.Web.Areas.Admin.Models.Posts
         [Display(Name = "عکس")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile ImageFile { get; set; }
+
+
+        public bool IsSpecial { get; set; }
     }
 
     public class EditPostViewModel
@@ -57,5 +60,9 @@ namespace CodeYad_Blog.Web.Areas.Admin.Models.Posts
 
         [Display(Name = "عکس")]
         public IFormFile ImageFile { get; set; }
+
+        [Display(Name = "پست ویژه ؟")]
+        public bool IsSpecial { get; set; }
+
     }
 }
