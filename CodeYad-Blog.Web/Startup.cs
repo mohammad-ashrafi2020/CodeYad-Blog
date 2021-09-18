@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CodeYad_Blog.CoreLayer.Services;
 using CodeYad_Blog.CoreLayer.Services.Categories;
 using CodeYad_Blog.CoreLayer.Services.Comments;
 using CodeYad_Blog.CoreLayer.Services.Posts;
@@ -40,7 +41,7 @@ namespace CodeYad_Blog.Web
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IFileManager, FileManager>();
             services.AddTransient<ICommentService, CommentService>();
-
+            services.AddTransient<IMainPageService, MainPageService>();
             services.AddDbContext<BlogContext>(option =>
             {
                 option.UseSqlServer(Configuration.GetConnectionString("Default"));

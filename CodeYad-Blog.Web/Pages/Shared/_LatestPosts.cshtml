@@ -1,0 +1,49 @@
+﻿@using CodeYad_Blog.CoreLayer.Utilities
+@model List<CodeYad_Blog.CoreLayer.DTOs.Posts.PostDto>
+
+@foreach (var post in Model)
+{
+    <div class="col-md-6">
+        <article class="entry card">
+            <div class="entry__img-holder card__img-holder">
+                <a asp-page="Post" asp-route-slug="@post.Slug">
+                    <div class="thumb-container thumb-70">
+                        <img data-src="@Directories.GetPostImage(post.ImageName)" src="@Directories.GetPostImage(post.ImageName)" class="entry__img lazyload" alt="@post.Title" />
+                    </div>
+                </a>
+                @if (post.SubCategory != null)
+                {
+                    <a asp-page="Search" asp-route-categorySlug="@post.SubCategory.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--violet">
+                        @post.SubCategory.Title
+                    </a>
+                }
+                else
+                {
+                    <a asp-page="Search" asp-route-categorySlug="@post.Category.Slug" class="entry__meta-category entry__meta-category--label entry__meta-category--align-in-corner entry__meta-category--violet">
+                        @post.Category.Title
+                    </a>
+                }
+            </div>
+
+            <div class="entry__body card__body">
+                <div class="entry__header">
+                    <h2 class="entry__title">
+                        <a asp-page="Post" asp-route-slug="@post.Slug">@post.Title</a>
+                    </h2>
+                    <ul class="entry__meta">
+                        <li class="entry__meta-author">
+                            <span>نویسنده:</span>
+                            <a href="#">@post.UserFullName</a>
+                        </li>
+                        <li class="entry__meta-date">
+                            @post.CreationDate.ToShortDateString()
+                        </li>
+                    </ul>
+                </div>
+                <div class="entry__excerpt">
+                    <p>عد از اعلام تصمیم سامسونگ برای به عقب انداختن عرضه گلکسی فولد، شایعاتی مبنی بر احتمال تاخیر در عرضه ...</p>
+                </div>
+            </div>
+        </article>
+    </div>
+}
