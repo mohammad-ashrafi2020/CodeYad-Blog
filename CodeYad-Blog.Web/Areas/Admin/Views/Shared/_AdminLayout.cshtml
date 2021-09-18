@@ -42,10 +42,12 @@
     <script src="/admin/dist/js/adminlte.min.js"></script>
     <script src="/admin/dist/js/demo.js"></script>
     <script src="/js/custom.js"></script>
-<partial name="_ValidationScriptsPartial" />
+    <script src="/js/global.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function () {
-            $('.sidebar-menu').tree()
+            $('.sidebar-menu').tree();
         })
     </script>
     @await RenderSectionAsync("Scripts", false)

@@ -30,16 +30,12 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost("/admin/category/add/{parentId?}")]
-        public IActionResult Add(int? parentId,CreateCategoryViewModel createViewModel)
+        public IActionResult Add(int? parentId, CreateCategoryViewModel createViewModel)
         {
             createViewModel.ParentId = parentId;
             var result = _categoryService.CreateCategory(createViewModel.MapToDto());
-            if (result.Status != OperationResultStatus.Success)
-            {
-                ModelState.AddModelError(nameof(createViewModel.Slug), result.Message);
-                return View();
-            }
-            return RedirectToAction("Index");
+
+            return RedirectAndShowAlert(result, RedirectToAction("Index"));
         }
 
         public IActionResult Edit(int id)
@@ -54,7 +50,7 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
                 MetaTag = category.MetaTag,
                 MetaDescription = category.MetaDescription,
                 Title = category.Title,
-                
+
             };
             return View(model);
         }
