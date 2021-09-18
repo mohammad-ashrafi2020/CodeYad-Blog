@@ -58,9 +58,9 @@ namespace CodeYad_Blog.Web.Pages.Auth
 
             List<Claim> claims = new List<Claim>()
             {
-                new Claim("Test","Test"),
                 new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
                 new Claim(ClaimTypes.Name,user.FullName),
+                new Claim(ClaimTypes.Role,user.Role.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

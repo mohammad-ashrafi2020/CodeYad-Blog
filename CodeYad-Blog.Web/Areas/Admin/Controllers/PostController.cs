@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeYad_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize]
-    public class PostController : Controller
+    public class PostController : AdminControllerBase
     {
         private readonly IPostService _postService;
 

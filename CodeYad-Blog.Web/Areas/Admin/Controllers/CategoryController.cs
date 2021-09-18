@@ -10,8 +10,7 @@ using CodeYad_Blog.Web.Areas.Admin.Models.Categories;
 
 namespace CodeYad_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    public class CategoryController : Controller
+    public class CategoryController : AdminControllerBase
     {
         private readonly ICategoryService _categoryService;
 

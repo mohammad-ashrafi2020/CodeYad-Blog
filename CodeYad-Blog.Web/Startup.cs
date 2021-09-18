@@ -17,6 +17,7 @@ using CodeYad_Blog.CoreLayer.Services.Posts;
 using CodeYad_Blog.CoreLayer.Services.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using CodeYad_Blog.CoreLayer.Services.FileManager;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace CodeYad_Blog.Web
 {
@@ -46,6 +47,13 @@ namespace CodeYad_Blog.Web
             {
                 option.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("AdminPolicy", builder =>
+                {
+                    builder.RequireRole("Admin");
+                });
+            });
 
             services.AddAuthentication(option =>
             {
@@ -57,6 +65,7 @@ namespace CodeYad_Blog.Web
                 option.LoginPath = "/Auth/Login";
                 option.LogoutPath = "/Auth/Logout";
                 option.ExpireTimeSpan = TimeSpan.FromDays(30);
+                option.AccessDeniedPath = "/";
             });
         }
 

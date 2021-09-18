@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeYad_Blog.Web.Areas.Admin.Controllers
 {
-    [Area("admin")]
-    public class HomeController : Controller
+    public class HomeController : AdminControllerBase
     {
         public IActionResult Index()
         {
