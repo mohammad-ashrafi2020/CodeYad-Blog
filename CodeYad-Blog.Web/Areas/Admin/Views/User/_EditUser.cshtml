@@ -1,0 +1,13 @@
+﻿@model CodeYad_Blog.CoreLayer.DTOs.Users.EditUserDto
+<form asp-area="admin" asp-controller="User" asp-action="Edit" method="post">
+    @Html.HiddenFor(m=>m.UserId)
+    <div class="row">
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.FullName)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.Role)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Edit</button>
+</form>

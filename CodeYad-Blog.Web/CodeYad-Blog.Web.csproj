@@ -7640,4 +7640,8 @@
     <TypeScriptCompile Include="wwwroot\admin\bower_components\moment\moment.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TagHelpers\" />
+  </ItemGroup>
+
 </Project>

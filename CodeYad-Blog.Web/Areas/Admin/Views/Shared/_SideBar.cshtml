@@ -21,6 +21,11 @@
                     <i class="fa fa fa-dashboard"></i> <span>داشبرد</span>
                 </a>
             </li>
+            <li class="@(selected=="users"?"active":null)">
+                <a asp-area="Admin" asp-controller="User" asp-action="Index">
+                    <i class="fa fa fa-dashboard"></i> <span>مدیریت کاربران</span>
+                </a>
+            </li>
             <li class="@(selected=="category"?"active":null)">
                 <a asp-area="Admin" asp-controller="Category" asp-action="Index">
                     <i class="fa fa-th"></i> <span>دسته بندی ها</span>

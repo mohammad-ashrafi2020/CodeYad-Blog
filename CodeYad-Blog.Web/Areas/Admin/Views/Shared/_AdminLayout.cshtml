@@ -21,36 +21,51 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-
-        <partial name="_Header" />
-        <partial name="_SideBar" />
-
-        <div class="content-wrapper">
-            @RenderBody()
+<div class="modal" id="default_Modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             
+            </div>
         </div>
-        <footer class="main-footer text-left">
-            <strong>
-                Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="http://hosseinizadeh.ir/adminlte">Alireza Hosseinizadeh</a>
-            </strong>
-        </footer>
     </div>
-    <script src="/admin/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="/admin/bower_components/fastclick/lib/fastclick.js"></script>
-    <script src="/admin/dist/js/adminlte.min.js"></script>
-    <script src="/admin/dist/js/demo.js"></script>
-    <script src="/js/custom.js"></script>
-    <script src="/js/global.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        $(document).ready(function () {
-            $('.sidebar-menu').tree();
-        })
-    </script>
-    @await RenderSectionAsync("Scripts", false)
+</div>
+<div class="wrapper">
+
+    <partial name="_Header"/>
+    <partial name="_SideBar"/>
+
+    <div class="content-wrapper">
+        @RenderBody()
+    </div>
+    <footer class="main-footer text-left">
+        <strong>
+            Copyleft &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a> & <a href="http://hosseinizadeh.ir/adminlte">Alireza Hosseinizadeh</a>
+        </strong>
+    </footer>
+</div>
+<script src="/admin/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/admin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/admin/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="/admin/dist/js/adminlte.min.js"></script>
+<script src="/admin/dist/js/demo.js"></script>
+<script src="/js/custom.js"></script>
+<script src="/js/global.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<partial name="_ValidationScriptsPartial"/>
+<script>
+    $(document).ready(function() {
+        $('.sidebar-menu').tree();
+    })
+</script>
+@await RenderSectionAsync("Scripts", false)
 </body>
 
 </html>

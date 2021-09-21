@@ -1,0 +1,97 @@
+﻿@model CodeYad_Blog.CoreLayer.DTOs.Users.UserFilterDto
+@{
+    ViewData["title"] = "مدیریت کاربران";
+    ViewData["selected"] = "users";
+    var counter = 1;
+}
+<section class="content-header">
+    <h1>
+        @ViewData["title"]
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">
+                <i class="fa fa-dashboard"></i> خانه
+            </a>
+        </li>
+        <li class="active">@ViewData["title"]</li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-primary ">
+        <div class="box-body p-0">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>نام کاربری</th>
+                        <th>نام و نام خانوادگی</th>
+                        <th>نقش</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Users)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td>@item.UserName</td>
+                            <td>@item.FullName</td>
+                            <td>
+                                @item.Role.ToString()
+                            </td>
+                            <td>
+                                <open-modal title="ویرایش کاربر"
+                                            url="@Url.Action("ShowEditModal","User",new {userId=item.UserId})">
+                                    ویرایش
+                                </open-modal>
+                            </td>
+                        </tr>
+                        counter += 1;
+                    }
+                </tbody>
+            </table>
+        </div>
+        @if (Model.PageCount > 1)
+        {
+            <div class="box-footer">
+                <div style="padding:10px">
+                    <ul class="pagination" style="display: inline-block">
+                        @if (Model.PageId > 1)
+                        {
+                            <li class="paginate_button previous">
+                                <a onclick="changePage(@(Model.PageId-1))" href="#">قبلی</a>
+                            </li>
+                        }
+                        else
+                        {
+
+                            <li class="paginate_button previous disabled">
+                                <a href="#">قبلی</a>
+                            </li>
+                        }
+
+                        @for (var i = 1; i <= Model.PageCount; i++)
+                        {
+                            <li class="paginate_button @(i == Model.PageId ? "active" : null)">
+                                <a onclick="changePage(@i)" href="javascript:void(0)">@i</a>
+                            </li>
+                        }
+                        @if (Model.PageCount > Model.PageId)
+                        {
+                            <li class="paginate_button next">
+                                <a onclick="changePage(@(Model.PageId+1))" href="#">بعدی</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="paginate_button next disabled">
+                                <a href="javascript:void(0)">بعدی</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</section>
