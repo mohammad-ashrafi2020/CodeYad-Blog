@@ -28,7 +28,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
             if (IsSlugExist(post.Slug))
                 return OperationResult.Error("Slug تکراری است");
 
-            post.ImageName = _fileManger.SaveFileAndReturnName(command.ImageFile, Directories.PostImage);
+            post.ImageName = _fileManger.SaveImageAndReturnImageName(command.ImageFile, Directories.PostImage);
             _context.Posts.Add(post);
             _context.SaveChanges();
 
@@ -50,7 +50,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
 
             PostMapper.EditPost(command, post);
             if (command.ImageFile != null)
-                post.ImageName = _fileManger.SaveFileAndReturnName(command.ImageFile, Directories.PostImage);
+                post.ImageName = _fileManger.SaveImageAndReturnImageName(command.ImageFile, Directories.PostImage);
 
             _context.SaveChanges();
 

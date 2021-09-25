@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using CodeYad_Blog.CoreLayer.Utilities;
 
 namespace CodeYad_Blog.CoreLayer.Services.FileManager
 {
@@ -11,6 +12,15 @@ namespace CodeYad_Blog.CoreLayer.Services.FileManager
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), path,fileName);
             if (File.Exists(filePath))
                 File.Delete(filePath);
+        }
+
+        public string SaveImageAndReturnImageName(IFormFile file, string savePath)
+        {
+            var isNotImage = !ImageValidation.Validate(file);
+            if (isNotImage)
+                throw new Exception();
+
+            return SaveFileAndReturnName(file, savePath);
         }
 
         public string SaveFileAndReturnName(IFormFile file, string savePath)
