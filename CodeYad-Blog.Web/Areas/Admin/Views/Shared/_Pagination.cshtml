@@ -18,7 +18,7 @@
                     </li>
                 }
 
-                @for (var i = 1; i <= Model.PageCount; i++)
+                @for (var i = Model.StartPage; i <= Model.EndPage; i++)
                 {
                     <li class="paginate_button @(i == Model.CurrentPage ? "active" : null)">
                         <a  onclick="changePage(@i)"href="javascript:void(0)">@i</a>

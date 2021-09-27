@@ -53,7 +53,7 @@
     @if (Model.PageCount > 1)
     {
         <nav class="pagination">
-            @for (var i = 1; i <= Model.PageCount; i++)
+            @for (var i = Model.StartPage; i <= Model.EndPage; i++)
             {
                 if (i == Model.FilterParams.PageId)
                 {
