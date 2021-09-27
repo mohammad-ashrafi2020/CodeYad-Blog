@@ -1,17 +1,4 @@
-﻿function changePage(pageId) {
-    var url = new URL(window.location.href);
-    var search_params = url.searchParams;
-
-    // Change PageId
-    search_params.set('filterParams.pageId', pageId);
-    url.search = search_params.toString();
-
-    // the new url string
-    var new_url = url.toString();
-
-    window.location.replace(new_url);
-}
-function deleteItem(url, errorTitle, errorText) {
+﻿function deleteItem(url, errorTitle, errorText) {
     if (errorTitle == null || errorTitle == "undefined") {
         errorTitle = "عملیات ناموفق";
     }

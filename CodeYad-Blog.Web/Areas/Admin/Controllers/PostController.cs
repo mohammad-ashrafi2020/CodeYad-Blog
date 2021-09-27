@@ -22,7 +22,7 @@ namespace CodeYad_Blog.Web.Areas.Admin.Controllers
             {
                 CategorySlug = categorySlug,
                 PageId = pageId,
-                Take = 10,
+                Take = 1,
                 Title = title
             };
             var model = _postService.GetPostsByFilter(param);

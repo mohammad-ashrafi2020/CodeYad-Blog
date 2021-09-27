@@ -93,12 +93,8 @@ namespace CodeYad_Blog.CoreLayer.Services.Users
                 .Where(c => !c.IsDelete);
 
             var skip = (pageId - 1) * take;
-            var pageCount = users.Count() / take;
-
-            return new UserFilterDto()
+            var model= new UserFilterDto()
             {
-                PageId = pageId,
-                PageCount = pageCount,
                 Users = users.Skip(skip).Take(take).Select(user => new UserDto()
                 {
                     FullName = user.FullName,
@@ -109,6 +105,8 @@ namespace CodeYad_Blog.CoreLayer.Services.Users
                     UserId = user.Id
                 }).ToList()
             };
+            model.GeneratePaging(users, take,pageId);
+            return model;
         }
     }
 }

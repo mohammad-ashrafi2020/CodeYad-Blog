@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using CodeYad_Blog.CoreLayer.Utilities;
 
 namespace CodeYad_Blog.CoreLayer.DTOs.Posts
 {
-    public class PostFilterDto
+    public class PostFilterDto:BasePagination
     {
-        public int PageCount { get; set; }
         public List<PostDto> Posts { get; set; }
         public PostFilterParams FilterParams { get; set; }
     }

@@ -24,7 +24,7 @@ namespace CodeYad_Blog.Web.Pages
             {
                 CategorySlug = categorySlug,
                 PageId = pageId,
-                Take = 1,
+                Take = 2,
                 Title = q
             });
         }
@@ -35,7 +35,7 @@ namespace CodeYad_Blog.Web.Pages
             {
                 CategorySlug = categorySlug,
                 PageId = pageId,
-                Take = 1,
+                Take = 2,
                 Title = q
             });
             return Partial("_SearchView", model);

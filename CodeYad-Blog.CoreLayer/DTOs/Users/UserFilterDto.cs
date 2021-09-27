@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using CodeYad_Blog.CoreLayer.Utilities;
 
 namespace CodeYad_Blog.CoreLayer.DTOs.Users
 {
-    public class UserFilterDto
+    public class UserFilterDto:BasePagination
     {
-        public int PageCount { get; set; }
-        public int PageId { get; set; }
         public List<UserDto> Users { get; set; }
     }
 

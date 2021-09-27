@@ -98,15 +98,15 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
                 result = result.Where(r => r.Title.Contains(filterParams.Title));
 
             var skip = (filterParams.PageId - 1) * filterParams.Take;
-            var pageCount = result.Count() / filterParams.Take;
-
-            return new PostFilterDto()
+            var model= new PostFilterDto()
             {
                 Posts = result.Skip(skip).Take(filterParams.Take)
                     .Select(post => PostMapper.MapToDto(post)).ToList(),
                 FilterParams = filterParams,
-                PageCount = pageCount
             };
+            model.GeneratePaging(result,filterParams.Take,filterParams.PageId);
+
+            return model;
         }
 
         public List<PostDto> GetRelatedPosts(int categoryId)
