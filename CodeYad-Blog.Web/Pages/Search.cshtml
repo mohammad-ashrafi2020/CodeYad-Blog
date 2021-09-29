@@ -21,6 +21,16 @@
     }
     ViewData["Title"] = search;
 }
+@section MetaTags
+{
+    @if (category != null)
+    {
+        <meta name="description" content="@category.MetaDescription">
+        <meta name="og:description" content="@category.MetaDescription">
+        <meta name="twitter:description" content="@category.MetaDescription">
+        <meta name="keywords" content="@category.MetaTag">
+    }
+}
 <div class="main-container container pt-40" id="main-container">
     <div class="row">
         <div class="col-lg-8 blog__content mb-72">
@@ -58,7 +68,7 @@
                 complete: function () {
                     $(".loading").hide();
                 }
-            }).done(function(data) {
+            }).done(function (data) {
                 $("#ajaxSearch").html(data);
             });
         }

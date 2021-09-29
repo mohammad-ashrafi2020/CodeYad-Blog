@@ -1,4 +1,6 @@
-﻿namespace CodeYad_Blog.CoreLayer.Utilities
+﻿using System.Text.RegularExpressions;
+
+namespace CodeYad_Blog.CoreLayer.Utilities
 {
     public static class TextHelper
     {
@@ -21,6 +23,11 @@
                 .Replace("<", "")
                 .Replace(@"\", "")
                 .Replace("/", "");
+        }
+        public static string ConvertHtmlToText(this string text)
+        {
+            return Regex.Replace(text, "<.*?>", " ")
+                .Replace(":&nbsp;", " ");
         }
     }
 }

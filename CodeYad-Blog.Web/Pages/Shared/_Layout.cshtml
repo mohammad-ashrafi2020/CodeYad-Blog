@@ -8,10 +8,10 @@
 
 <head>
     <title>@ViewData["Title"]</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="">
+    <meta name="robots" content="index, follow">
+    @await RenderSectionAsync("MetaTags", false)
 
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,600,700%7CSource+Sans+Pro:400,600,700' rel='stylesheet'>
 

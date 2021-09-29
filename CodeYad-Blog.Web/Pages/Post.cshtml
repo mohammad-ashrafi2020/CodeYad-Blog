@@ -5,9 +5,22 @@
     ViewData["Title"] = Model.Post.Title;
     var siteUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
     var postUrl = $"{siteUrl}/post/{Model.Post.Slug}";
+    var shortDescription = Model.Post.Description.ConvertHtmlToText().Substring(0, 200);
+    var imageType = @System.IO.Path.GetExtension(Model.Post.ImageName).Replace(".", "");
+    var imageUrl = @Directories.GetPostImage(Model.Post.ImageName);
 }
 @section MetaLink{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+}
+@section MetaTags
+{
+    <meta property="og:type" content="article">
+    <meta name="description" content="@shortDescription">
+    <meta name="og:description" content="@shortDescription">
+    <meta name="twitter:description" content="@shortDescription">
+    <meta property="og:image" content="@imageUrl">
+    <meta property="og:image:type" content="image/@imageType">
+    <meta name="twitter:image" content="@imageUrl">
 }
 <div class="container">
     <ul class="breadcrumbs">
@@ -68,7 +81,7 @@
                     </div> <!-- end entry header -->
 
                     <div class="entry__img-holder">
-                        <img src="@Directories.GetPostImage(Model.Post.ImageName)" alt="@Model.Post.Title" class="entry__img">
+                        <img src="@imageUrl" alt="@Model.Post.Title" class="entry__img">
                     </div>
 
                     <div class="entry__article-wrap">
@@ -95,7 +108,7 @@
                             @Html.Raw(Model.Post.Description)
                         </div> <!-- end entry article -->
                     </div> <!-- end entry article wrap -->
-                  
+
                     @if (Model.RelatedPosts.Any())
                     {
                         <section class="section related-posts mt-40 mb-0">
@@ -180,8 +193,6 @@
         </div> <!-- end post content -->
         <!-- Sidebar -->
         <aside class="col-lg-4 sidebar sidebar--right" id="popular_posts">
-
-    
         </aside> <!-- end sidebar -->
 
     </div> <!-- end content -->
