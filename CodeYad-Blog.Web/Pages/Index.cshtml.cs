@@ -27,6 +27,7 @@ namespace CodeYad_Blog.Web.Pages
 
         public void OnGet()
         {
+            throw new Exception();
             MainPageData = _mainPageService.GetData();
         }
 
