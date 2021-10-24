@@ -5,7 +5,11 @@
     ViewData["Title"] = Model.Post.Title;
     var siteUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
     var postUrl = $"{siteUrl}/post/{Model.Post.Slug}";
-    var shortDescription = Model.Post.Description.ConvertHtmlToText().Substring(0, 200);
+    var shortDescription = Model.Post.Description.ConvertHtmlToText();
+    if (shortDescription.Length > 300)
+    {
+        shortDescription = shortDescription.Substring(0, 200);
+    }
     var imageType = @System.IO.Path.GetExtension(Model.Post.ImageName).Replace(".", "");
     var imageUrl = @Directories.GetPostImage(Model.Post.ImageName);
 }

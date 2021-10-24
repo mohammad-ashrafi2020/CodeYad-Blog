@@ -15,6 +15,7 @@ namespace CodeYad_Blog.Web.Areas.Admin
             HttpContext.Response.Cookies.Append("SystemAlert", model);
             if (result.Status != OperationResultStatus.Success)
                 return View();
+
             return redirectPath;
         }
         protected void SuccessAlert()
