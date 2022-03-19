@@ -127,7 +127,10 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
 
         public void IncreaseVisit(int postId)
         {
-            var post = _context.Posts.First(p => p.Id == postId);
+            var post = _context.Posts.FirstOrDefault(p => p.Id == postId);
+            if(post==null)
+                return;
+            
             post.Visit += 1;
             _context.SaveChanges();
         }

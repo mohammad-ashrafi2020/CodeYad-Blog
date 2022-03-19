@@ -12,6 +12,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Comments
     public interface ICommentService
     {
         OperationResult CreateComment(CreateCommentDto command);
+        OperationResult DeleteComment(long id);
         List<CommentDto> GetPostComments(int postId);
     }
     public class CommentService : ICommentService
@@ -33,6 +34,16 @@ namespace CodeYad_Blog.CoreLayer.Services.Comments
             };
             _context.Add(comment);
             _context.SaveChanges();
+            return OperationResult.Success();
+        }
+
+        public OperationResult DeleteComment(long id)
+        {
+            var comment = _context.PostComments.FirstOrDefault(f => f.Id == id);
+            if (comment == null)
+                return OperationResult.NotFound();
+
+            _context.PostComments.Remove(comment);
             return OperationResult.Success();
         }
 
