@@ -46,10 +46,22 @@ namespace CodeYad_Blog.WebApi.Controllers
 
             return Ok();
         }
+
         [HttpPut]
         public IActionResult Edit(EditCategoryDto category)
         {
             var result = _service.EditCategory(category);
+            if (result.Status != OperationResultStatus.Success)
+                return BadRequest(result.Message);
+
+            return Ok();
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _service.DeleteCategory(id);
             if (result.Status != OperationResultStatus.Success)
                 return BadRequest(result.Message);
 

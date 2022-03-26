@@ -26,18 +26,25 @@ services.AddDbContext<BlogContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
-
+services.AddCors(option =>
+{
+    option.AddPolicy("Default_CORS", o =>
+    {
+        o.AllowAnyHeader();
+        o.AllowAnyMethod();
+        o.WithOrigins("http://localhost:8080/",
+            "http://www.contoso.com");
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
-
+app.UseCors("Default_CORS");
 app.UseAuthorization();
 
 app.MapControllers();

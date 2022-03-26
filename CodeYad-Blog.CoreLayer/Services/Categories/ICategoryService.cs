@@ -12,6 +12,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
         List<CategoryDto> GetChildCategories(int parentId);
         CategoryDto GetCategoryBy(int id);
         CategoryDto GetCategoryBy(string slug);
+        OperationResult DeleteCategory(int id);
         bool IsSlugExist(string slug);
     }
 }

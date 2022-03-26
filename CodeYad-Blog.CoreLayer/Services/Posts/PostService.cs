@@ -60,6 +60,23 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
             return OperationResult.Success();
         }
 
+        public OperationResult DeletePost(int id)
+        {
+            var post=_context.Posts
+                .Include(c=>c.PostComments)
+                .FirstOrDefault(c => c.Id == id);
+
+            if(post==null)
+                return OperationResult.NotFound();
+
+            if(post.PostComments.Any())
+                _context.PostComments.RemoveRange(post.PostComments);
+
+            _context.Posts.Remove(post);
+            _context.SaveChanges();
+            return OperationResult.Success();
+        }
+
         public PostDto GetPostById(int postId)
         {
             var post = _context.Posts

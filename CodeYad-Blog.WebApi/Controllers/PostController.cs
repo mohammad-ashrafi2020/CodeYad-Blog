@@ -24,7 +24,7 @@ namespace CodeYad_Blog.WebApi.Controllers
             return _service.GetPopularPost();
         }
         [HttpGet]
-        public PostFilterDto GetList(PostFilterParams @params)
+        public PostFilterDto GetList([FromQuery] PostFilterParams @params)
         {
             return _service.GetPostsByFilter(@params);
         }
@@ -32,12 +32,21 @@ namespace CodeYad_Blog.WebApi.Controllers
         [HttpGet("{id}")]
         public PostDto GetById(int id)
         {
-            _service.IncreaseVisit(id);
             return _service.GetPostById(id);
+        }
+        [HttpGet("getBySlug/{slug}")]
+        public PostDto GetBySlug(string slug)
+        {
+            var post = _service.GetPostBySlug(slug);
+            if (post == null)
+                return null;
+
+            _service.IncreaseVisit(post.PostId);
+            return post;
         }
 
         [HttpPost]
-        public IActionResult Create(CreatePostDto post)
+        public IActionResult Create([FromForm] CreatePostDto post)
         {
             var result = _service.CreatePost(post);
             if (result.Status != OperationResultStatus.Success)
@@ -46,9 +55,20 @@ namespace CodeYad_Blog.WebApi.Controllers
             return Ok();
         }
         [HttpPut]
-        public IActionResult Edit(EditPostDto post)
+        public IActionResult Edit([FromForm] EditPostDto post)
         {
             var result = _service.EditPost(post);
+            if (result.Status != OperationResultStatus.Success)
+                return BadRequest(result.Message);
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var result = _service.DeletePost(id);
+
             if (result.Status != OperationResultStatus.Success)
                 return BadRequest(result.Message);
 

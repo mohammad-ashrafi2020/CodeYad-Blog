@@ -8,6 +8,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
     {
         OperationResult CreatePost(CreatePostDto command);
         OperationResult EditPost(EditPostDto command);
+        OperationResult DeletePost(int id);
         PostDto GetPostById(int postId);
         PostDto GetPostBySlug(string slug);
         PostFilterDto GetPostsByFilter(PostFilterParams filterParams);

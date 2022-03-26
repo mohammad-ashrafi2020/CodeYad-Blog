@@ -33,7 +33,7 @@ namespace CodeYad_Blog.WebApi.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var result = _service.DeleteComment(id);

@@ -7,6 +7,7 @@ using CodeYad_Blog.CoreLayer.Utilities;
 using CodeYad_Blog.DataLayer.Context;
 using CodeYad_Blog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace CodeYad_Blog.CoreLayer.Services.Categories
 {
@@ -79,6 +80,40 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
             if (category == null)
                 return null;
             return CategoryMapper.Map(category);
+        }
+
+        public OperationResult DeleteCategory(int id)
+        {
+            var category = _context.Categories
+                .Include(c => c.SubPosts)
+                .Include(c => c.Posts)
+                .FirstOrDefault(f=>f.Id==id);
+            if(category==null)
+                return OperationResult.NotFound("اطلاعات یافت نشد");
+
+            if(category.Posts.Any() || category.SubPosts.Any())
+                return OperationResult.Error("امکان حذف این دسته بندی وجود ندارد");
+
+            try
+            {
+                var childCategory = _context.Categories
+                    .Include(c => c.SubPosts)
+                    .Include(c => c.Posts)
+                    .Where(f => f.ParentId == category.Id).ToList();
+                foreach (var child in childCategory)
+                {
+                    if (child.Posts.Any() || child.SubPosts.Any())
+                        return OperationResult.Error("امکان حذف این دسته بندی وجود ندارد");
+                }
+                _context.Remove(category);
+                _context.RemoveRange(childCategory);
+                _context.SaveChanges();
+                return OperationResult.Success();
+            }
+            catch (Exception e)
+            {
+               return OperationResult.Error(e.Message);
+            }
         }
 
         public List<CategoryDto> GetChildCategories(int parentId)
