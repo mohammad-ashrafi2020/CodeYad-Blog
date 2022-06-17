@@ -138,8 +138,10 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
         {
             return _context.Posts
                 .Include(c => c.User)
+                .Include(c => c.Category)
+                .Include(c => c.SubCategory)
                 .OrderByDescending(d => d.Visit)
-                .Take(6).Select(post => PostMapper.MapToDto(post)).ToList();
+                .Take(4).Select(post => PostMapper.MapToDto(post)).ToList();
         }
 
         public void IncreaseVisit(int postId)

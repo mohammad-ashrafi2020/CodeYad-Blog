@@ -32,8 +32,7 @@ services.AddCors(option =>
     {
         o.AllowAnyHeader();
         o.AllowAnyMethod();
-        o.WithOrigins("http://localhost:8080/",
-            "http://www.contoso.com");
+        o.AllowAnyOrigin();
     });
 });
 var app = builder.Build();

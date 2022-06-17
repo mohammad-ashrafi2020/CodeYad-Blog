@@ -38,6 +38,7 @@ namespace CodeYad_Blog.WebApi.Controllers
 
             return Ok();
         }
+
         [HttpPut]
         public IActionResult Edit(EditUserDto user)
         {
