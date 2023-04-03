@@ -6,14 +6,14 @@ namespace CodeYad_Blog.CoreLayer.Services.Posts
 {
     public interface IPostService
     {
-        OperationResult CreatePost(CreatePostDto command);
-        OperationResult EditPost(EditPostDto command);
-        PostDto GetPostById(int postId);
-        PostDto GetPostBySlug(string slug);
-        PostFilterDto GetPostsByFilter(PostFilterParams filterParams);
+        Task<OperationResult> CreatePost(CreatePostDto command);
+        Task<OperationResult> EditPost(EditPostDto command);
+        PostDto? GetPostById(long postId);
+        Task<PostDto?> GetPostBySlug(string slug);
+        Task<PostFilterDto> GetPostsByFilter(PostFilterParams filterParams);
         bool IsSlugExist(string slug);
-        List<PostDto> GetRelatedPosts(int groupId);
+        List<PostDto> GetRelatedPosts(long categoryId);
         List<PostDto> GetPopularPost();
-        void IncreaseVisit(int postId);
+        Task IncreaseVisit(long postId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 
@@ -6,7 +7,7 @@ namespace CodeYad_Blog.CoreLayer.Utilities
 {
     public class ImageValidation
     {
-        public static bool Validate(string imageName)
+        public static bool IsImage(string imageName)
         {
             var extension = Path.GetExtension(imageName);
             if (extension == null)
@@ -15,11 +16,11 @@ namespace CodeYad_Blog.CoreLayer.Utilities
             return extension.ToLower() == ".png" || extension.ToLower() == ".jpg";
         }
 
-        public static bool Validate(IFormFile file)
+        public static bool IsImage(IFormFile file)
         {
             try
             {
-                using var image = System.Drawing.Image.FromStream(file.OpenReadStream());
+                using var image = Image.FromStream(file.OpenReadStream());
                 return true;
             }
             catch

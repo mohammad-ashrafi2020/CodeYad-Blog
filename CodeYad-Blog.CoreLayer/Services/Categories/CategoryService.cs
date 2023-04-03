@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CodeYad_Blog.CoreLayer.DTOs.Categories;
 using CodeYad_Blog.CoreLayer.Mappers;
+using CodeYad_Blog.CoreLayer.Services.FileManager;
 using CodeYad_Blog.CoreLayer.Utilities;
 using CodeYad_Blog.DataLayer.Context;
 using CodeYad_Blog.DataLayer.Entities;
@@ -13,59 +14,67 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
     public class CategoryService : ICategoryService
     {
         private readonly BlogContext _context;
+        private readonly IFileManager _fileManager;
 
-        public CategoryService(BlogContext context)
+        public CategoryService(BlogContext context, IFileManager fileManager)
         {
             _context = context;
+            _fileManager = fileManager;
         }
 
-        public OperationResult CreateCategory(CreateCategoryDto command)
+        public async Task<OperationResult> CreateCategory(CreateCategoryDto command)
         {
-            if (IsSlugExist(command.Slug))
+            if (await IsSlugExist(command.Slug))
                 return OperationResult.Error("Slug Is Exist");
 
             var category = new Category()
             {
                 Title = command.Title,
-                IsDelete = false,
-                ParentId = command.ParentId,
                 Slug = command.Slug.ToSlug(),
-                MetaTag = command.MetaTag,
-                MetaDescription = command.MetaDescription
+                SeoData = command.SeoData,
             };
+
+            if (ImageValidation.IsImage(command.ImageFile))
+                category.ImageName =
+                    await _fileManager.SaveFileAndReturnNameAsync(command.ImageFile, Directories.Categories);
+
             _context.Categories.Add(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return OperationResult.Success();
         }
 
-        public OperationResult EditCategory(EditCategoryDto command)
+        public async Task<OperationResult> EditCategory(EditCategoryDto command)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == command.Id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == command.Id);
             if (category == null)
                 return OperationResult.NotFound();
 
             if (command.Slug.ToSlug() != category.Slug)
-                if (IsSlugExist(command.Slug))
+                if (await IsSlugExist(command.Slug))
                     return OperationResult.Error("Slug Is Exist");
 
-            category.MetaDescription = command.MetaDescription;
+            if (command.ImageFile != null && ImageValidation.IsImage(command.ImageFile))
+                category.ImageName =
+                    await _fileManager.SaveFileAndReturnNameAsync(command.ImageFile, Directories.Categories);
+
+
             category.Slug = command.Slug.ToSlug();
             category.Title = command.Title;
-            category.MetaTag = command.MetaTag;
+            category.SeoData = command.SeoData;
 
-            //_context.Update(category);
-            _context.SaveChanges();
+            _context.Update(category);
+            await _context.SaveChangesAsync();
             return OperationResult.Success();
         }
 
-        public List<CategoryDto> GetAllCategory()
+        public async Task<List<CategoryDto>> GetAllCategory()
         {
-            return _context.Categories.Select(category => CategoryMapper.Map(category)).ToList();
+            return await _context.Categories.Select(category => CategoryMapper.Map(category)).ToListAsync();
         }
 
-        public CategoryDto GetCategoryBy(int id)
+        public async Task<CategoryDto?> GetCategoryBy(long id)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null)
                 return null;
@@ -73,25 +82,17 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
             return CategoryMapper.Map(category);
         }
 
-        public CategoryDto GetCategoryBy(string slug)
+        public async Task<CategoryDto?> GetCategoryBy(string slug)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.Slug == slug);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Slug == slug);
             if (category == null)
                 return null;
             return CategoryMapper.Map(category);
         }
 
-        public List<CategoryDto> GetChildCategories(int parentId)
+        public async Task<bool> IsSlugExist(string slug)
         {
-            return _context.Categories.Where(r=>r.ParentId==parentId)
-                .Select(category => CategoryMapper.Map(category)).ToList();
+            return await _context.Categories.AnyAsync(c => c.Slug == slug.ToSlug());
         }
-
-        public bool IsSlugExist(string slug)
-        {
-            return _context.Categories.Any(c => c.Slug == slug.ToSlug());
-        }
-
-       
     }
 }

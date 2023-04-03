@@ -12,7 +12,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Comments
     public interface ICommentService
     {
         OperationResult CreateComment(CreateCommentDto command);
-        List<CommentDto> GetPostComments(int postId);
+        List<CommentDto> GetPostComments(long postId);
     }
     public class CommentService : ICommentService
     {
@@ -29,14 +29,15 @@ namespace CodeYad_Blog.CoreLayer.Services.Comments
             {
                 PostId = command.PostId,
                 Text = command.Text,
-                UserId = command.UserId
+                UserId = command.UserId,
+                ParentId = command.ParentId,
             };
             _context.Add(comment);
             _context.SaveChanges();
             return OperationResult.Success();
         }
 
-        public List<CommentDto> GetPostComments(int postId)
+        public List<CommentDto> GetPostComments(long postId)
         {
             return _context.PostComments
                 .Include(c => c.User)
@@ -45,7 +46,7 @@ namespace CodeYad_Blog.CoreLayer.Services.Comments
                 {
                     PostId = comment.PostId,
                     Text = comment.Text,
-                    UserFullName = comment.User.FullName,
+                    UserFullName = comment.User.FullName ?? $"@{comment.User.UserName}",
                     CommentId = comment.Id,
                     CreationDate = comment.CreationDate
                 }).ToList();

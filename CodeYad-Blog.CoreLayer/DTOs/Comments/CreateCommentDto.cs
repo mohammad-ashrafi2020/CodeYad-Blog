@@ -2,8 +2,9 @@
 {
     public class CreateCommentDto
     {
-        public int UserId { get; set; }
-        public int PostId { get; set; }
+        public long UserId { get; set; }
+        public long PostId { get; set; }
         public string Text { get; set; }
+        public long? ParentId { get; set; }
     }
 }

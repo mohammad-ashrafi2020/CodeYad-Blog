@@ -10,6 +10,7 @@ namespace CodeYad_Blog.CoreLayer.Services.FileManager
     {
         string SaveImageAndReturnImageName(IFormFile file, string savePath);
         string SaveFileAndReturnName(IFormFile file, string savePath);
+        Task<string> SaveFileAndReturnNameAsync(IFormFile file, string savePath);
         void DeleteFile(string fileName, string path);
     }
 }

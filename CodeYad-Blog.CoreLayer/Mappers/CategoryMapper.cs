@@ -9,12 +9,11 @@ namespace CodeYad_Blog.CoreLayer.Mappers
         {
             return new CategoryDto()
             {
-                MetaDescription = category.MetaDescription,
-                MetaTag = category.MetaTag,
                 Slug = category.Slug,
-                ParentId = category.ParentId,
                 Id = category.Id,
-                Title = category.Title
+                Title = category.Title,
+                ImageName = category.ImageName,
+                SeoData = category.SeoData
             };
         }
     }

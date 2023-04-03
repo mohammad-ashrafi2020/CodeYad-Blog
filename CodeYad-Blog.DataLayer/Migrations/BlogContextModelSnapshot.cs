@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace CodeYad_Blog.DataLayer.Migrations
 {
     [DbContext(typeof(BlogContext))]
@@ -15,54 +17,86 @@ namespace CodeYad_Blog.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MetaDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetaTag")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
+                    b.Property<string>("ImageName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsSeen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Post", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -74,9 +108,6 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.Property<string>("ImageName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsSpecial")
                         .HasColumnType("bit");
 
@@ -85,16 +116,17 @@ namespace CodeYad_Blog.DataLayer.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)");
 
-                    b.Property<int?>("SubCategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Visit")
                         .HasColumnType("int");
@@ -103,7 +135,8 @@ namespace CodeYad_Blog.DataLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SubCategoryId");
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -112,28 +145,31 @@ namespace CodeYad_Blog.DataLayer.Migrations
 
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.PostComment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
+                    b.Property<long>("PostId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("PostId");
 
@@ -142,37 +178,181 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.ToTable("PostComments");
                 });
 
-            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.User", b =>
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.PostTag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<long>("PostId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Tag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("UserCreatorId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserCreatorId");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AboutMe")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("FullName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<bool>("IsDelete")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(102)
+                        .HasColumnType("nvarchar(102)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
+
+                    b.HasIndex("UserName")
+                        .IsUnique();
+
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.UserFollower", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("FollowingUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FollowingUserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFollowers");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Category", b =>
+                {
+                    b.OwnsOne("CodeYad_Blog.DataLayer.SeoData", "SeoData", b1 =>
+                        {
+                            b1.Property<long>("CategoryId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Canonical")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaKeyWords")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaTitle")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("CategoryId");
+
+                            b1.ToTable("Categories");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CategoryId");
+                        });
+
+                    b.Navigation("SeoData")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Notification", b =>
+                {
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Post", b =>
@@ -183,26 +363,52 @@ namespace CodeYad_Blog.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CodeYad_Blog.DataLayer.Entities.Category", "SubCategory")
-                        .WithMany("SubPosts")
-                        .HasForeignKey("SubCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("CodeYad_Blog.DataLayer.Entities.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.OwnsOne("CodeYad_Blog.DataLayer.SeoData", "SeoData", b1 =>
+                        {
+                            b1.Property<long>("PostId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<string>("Canonical")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaDescription")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaKeyWords")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("MetaTitle")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("PostId");
+
+                            b1.ToTable("Posts");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PostId");
+                        });
+
                     b.Navigation("Category");
 
-                    b.Navigation("SubCategory");
+                    b.Navigation("SeoData")
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.PostComment", b =>
                 {
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.PostComment", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("CodeYad_Blog.DataLayer.Entities.Post", "Post")
                         .WithMany("PostComments")
                         .HasForeignKey("PostId")
@@ -220,11 +426,58 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.PostTag", b =>
+                {
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Tag", b =>
+                {
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserCreatorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.UserFollower", b =>
+                {
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.User", "FollowingUser")
+                        .WithMany("Followings")
+                        .HasForeignKey("FollowingUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CodeYad_Blog.DataLayer.Entities.User", "User")
+                        .WithMany("Followers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FollowingUser");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Category", b =>
                 {
                     b.Navigation("Posts");
-
-                    b.Navigation("SubPosts");
                 });
 
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.Post", b =>
@@ -232,8 +485,17 @@ namespace CodeYad_Blog.DataLayer.Migrations
                     b.Navigation("PostComments");
                 });
 
+            modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.PostComment", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
             modelBuilder.Entity("CodeYad_Blog.DataLayer.Entities.User", b =>
                 {
+                    b.Navigation("Followers");
+
+                    b.Navigation("Followings");
+
                     b.Navigation("PostComments");
 
                     b.Navigation("Posts");

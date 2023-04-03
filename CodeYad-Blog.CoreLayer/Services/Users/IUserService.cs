@@ -6,10 +6,14 @@ namespace CodeYad_Blog.CoreLayer.Services.Users
 {
     public interface IUserService
     {
-        OperationResult EditUser(EditUserDto command);
-        OperationResult RegisterUser(UserRegisterDto registerDto);
-        UserDto LoginUser(LoginUserDto loginDto);
-        UserDto GetUserById(int userId);
-        UserFilterDto GetUsersByFilter(int pageId, int take);
+        Task<OperationResult> EditUser(EditUserDto command);
+        Task<OperationResult> RegisterUser(UserRegisterDto registerDto);
+        Task<UserDto?> LoginUser(LoginUserDto loginDto);
+        Task<UserDto?> GetUserById(long userId);
+        Task<UserDto?> GetUserByUserName(string userName);
+        Task<UserFilterDto> GetUsersByFilter(int pageId, int take);
+
+        Task<OperationResult> FollowUser(long userId, long targetUserId);
+        Task<OperationResult> UnFollowUser(long userId, long targetUserId);
     }
 }

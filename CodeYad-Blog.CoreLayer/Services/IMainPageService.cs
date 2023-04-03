@@ -27,25 +27,21 @@ namespace CodeYad_Blog.CoreLayer.Services
                 .OrderByDescending(d => d.Id)
                 .Take(6)
                 .Include(c => c.Posts)
-                .Include(c => c.SubPosts)
                 .Select(category => new MainPageCategoryDto()
                 {
                     Title = category.Title,
                     Slug = category.Slug,
-                    PostChild = category.Posts.Count + category.SubPosts.Count,
-                    IsMainCategory = category.ParentId == null
+                    PostChild = category.Posts.Count,
                 }).ToList();
 
             var specialPosts = _context.Posts
                 .OrderByDescending(d => d.Id)
                 .Include(c => c.Category)
-                .Include(c => c.SubCategory)
                 .Where(r => r.IsSpecial).Take(4)
                 .Select(post => PostMapper.MapToDto(post)).ToList();
 
             var latestPost = _context.Posts
                 .Include(c => c.Category)
-                .Include(c => c.SubCategory)
                 .OrderByDescending(d => d.Id)
                 .Take(6)
                 .Select(post=>PostMapper.MapToDto(post)).ToList();

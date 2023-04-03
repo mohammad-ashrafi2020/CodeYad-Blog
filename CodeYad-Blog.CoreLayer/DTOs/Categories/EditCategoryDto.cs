@@ -1,11 +1,14 @@
-﻿namespace CodeYad_Blog.CoreLayer.DTOs.Categories
+﻿using CodeYad_Blog.DataLayer;
+using Microsoft.AspNetCore.Http;
+
+namespace CodeYad_Blog.CoreLayer.DTOs.Categories
 {
     public class EditCategoryDto 
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
-        public string MetaTag { get; set; }
-        public string MetaDescription { get; set; }
+        public SeoData SeoData { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }

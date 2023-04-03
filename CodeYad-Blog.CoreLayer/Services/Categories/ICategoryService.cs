@@ -6,12 +6,11 @@ namespace CodeYad_Blog.CoreLayer.Services.Categories
 {
     public interface ICategoryService
     {
-        OperationResult CreateCategory(CreateCategoryDto command);
-        OperationResult EditCategory(EditCategoryDto command);
-        List<CategoryDto> GetAllCategory();
-        List<CategoryDto> GetChildCategories(int parentId);
-        CategoryDto GetCategoryBy(int id);
-        CategoryDto GetCategoryBy(string slug);
-        bool IsSlugExist(string slug);
+        Task<OperationResult> CreateCategory(CreateCategoryDto command);
+        Task<OperationResult> EditCategory(EditCategoryDto command);
+        Task<List<CategoryDto>> GetAllCategory();
+        Task<CategoryDto?> GetCategoryBy(long id);
+        Task<CategoryDto?> GetCategoryBy(string slug);
+        Task<bool> IsSlugExist(string slug);
     }
 }

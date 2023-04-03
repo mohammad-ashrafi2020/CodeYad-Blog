@@ -5,24 +5,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace CodeYad_Blog.DataLayer.Entities
+namespace CodeYad_Blog.DataLayer.Entities;
+
+
+[Index("Slug", IsUnique = true)]
+public class Category : BaseEntity
 {
-    public class Category : BaseEntity
-    {
-        [Required]
-        public string Title { get; set; }
-        [Required]
-        public string Slug { get; set; }
-        public string MetaTag { get; set; }
-        public string MetaDescription { get; set; }
-        public int? ParentId { get; set; }
+    [Required]
+    [MaxLength(100)]
+    public string Title { get; set; }
 
+    [Required]
+    [MaxLength(100)]
+    public string Slug { get; set; }
 
-        [InverseProperty("Category")]
-        public ICollection<Post> Posts { get; set; }
+    public SeoData SeoData { get; set; }
 
-        [InverseProperty("SubCategory")]
-        public ICollection<Post> SubPosts { get; set; }
-    }
+    [MaxLength(100)]
+    public string? ImageName { get; set; }
+    public ICollection<Post> Posts { get; set; }
 }

@@ -11,8 +11,9 @@ namespace CodeYad_Blog.CoreLayer.DTOs.Posts
 
     public class PostFilterParams
     {
-        public string Title { get; set; }
+        public string Search { get; set; }
         public string CategorySlug { get; set; }
+        public string Tag { get; set; }
         public int PageId { get; set; }
         public int Take { get; set; }
     }

@@ -8,8 +8,11 @@ namespace CodeYad_Blog.CoreLayer.Utilities
 {
     public class Directories
     {
+        public const string Categories = "wwwroot/images/categories";
         public const string PostImage = "wwwroot/images/posts";
         public const string PostContentImage = "wwwroot/images/posts/content";
+        public const string UserAvatar = "wwwroot/images/users/";
+
         public static string GetPostImage(string imageName) => $"{PostImage.Replace("wwwroot", "")}/{imageName}";
         public static string GetPostContentImage(string imageName) => $"{PostContentImage.Replace("wwwroot", "")}/{imageName}";
     }
